@@ -1,10 +1,15 @@
 import json
+import logging
+
 from modules.helpers.dataframe_helper import read_local_file_to_df, one_to_one_mappings_from_df, filter_df_by_timestamp
 from collections import defaultdict
 from data_aggregation import aggregate_sum_components_by_colour
 
 
 def main():
+
+    logging.getLogger().setLevel(logging.INFO)
+
     with open('src/config.json', 'r') as f:
         config = json.load(f)
 
@@ -21,7 +26,7 @@ def main():
                                                      index_col=config["components_mapping"]["id_col"],
                                                      value_col=config["components_mapping"]["colour_col"])
 
-    results = defaultdict(int)
+    sum_of_components_by_colour = defaultdict(int)
 
     for df_order_chunk in iter_df_fact_orders:
 
@@ -33,9 +38,9 @@ def main():
 
         aggregate_sum_components_by_colour(df_orders=df_filtered_orders,
                                            components_mapping=components_mapping,
-                                           results=results)
+                                           results=sum_of_components_by_colour)
 
-    print(dict(results))
+    logging.info(f"Sum of components by colours in 2021/06/03: \n{dict(sum_of_components_by_colour)}")
 
 
 if __name__ == '__main__':
