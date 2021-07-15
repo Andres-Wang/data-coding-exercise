@@ -1,0 +1,22 @@
+{
+  "local_data_files": {
+    "dim_components": {
+      "file_format": "CSV",
+      "file_path": "data/components.csv"
+    },
+    "fact_orders": {
+      "file_format": "LINE_DELIMITED_JSON",
+      "file_path": "data/orders.json.txt",
+      "chunk_size": 300
+    }
+  },
+  "components_mapping": {
+    "id_col": "componentId",
+    "colour_col": "colour"
+  },
+  "order_filter": {
+    "timestamp_col": "timestamp",
+    "start_timestamp": "2021-06-03T00:00:00Z",
+    "end_timestamp": "2021-06-04T00:00:00Z"
+  }
+}
